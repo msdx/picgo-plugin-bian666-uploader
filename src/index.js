@@ -6,7 +6,7 @@ module.exports = (ctx) => {
   const register = () => {
     ctx.helper.uploader.register('web-uploader', {
       handle,
-      name: '自定义Web图床',
+      name: 'bian666',
       config: config
     })
   }
@@ -15,9 +15,8 @@ module.exports = (ctx) => {
     if (!userConfig) {
       throw new Error('Can\'t find uploader config')
     }
-    const url = userConfig.url
-    const paramName = userConfig.paramName
-    const jsonPath = userConfig.jsonPath
+    const url = "https://tc.bian666.cf/upload"
+    const paramName = "file"
     const customHeader = userConfig.customHeader
     const customBody = userConfig.customBody
     try {
@@ -32,22 +31,14 @@ module.exports = (ctx) => {
 
         delete imgList[i].base64Image
         delete imgList[i].buffer
-        if (!jsonPath) {
-          imgList[i]['imgUrl'] = body
+        let imgUrl = 'https://tc.bian666.cf' + JSON.parse(body)[0].src
+        if (imgUrl) {
+          imgList[i]['imgUrl'] = imgUrl
         } else {
-          body = JSON.parse(body)
-          let imgUrl = body
-          for (let field of jsonPath.split('.')) {
-            imgUrl = imgUrl[field]
-          }
-          if (imgUrl) {
-            imgList[i]['imgUrl'] = imgUrl
-          } else {
-            ctx.emit('notification', {
-              title: '返回解析失败',
-              body: '请检查JsonPath设置'
-            })
-          }
+          ctx.emit('notification', {
+            title: '返回解析失败',
+            body: body
+          })
         }
       }
     } catch (err) {
@@ -90,30 +81,6 @@ module.exports = (ctx) => {
       userConfig = {}
     }
     return [
-      {
-        name: 'url',
-        type: 'input',
-        default: userConfig.url,
-        required: true,
-        message: 'API地址',
-        alias: 'API地址'
-      },
-      {
-        name: 'paramName',
-        type: 'input',
-        default: userConfig.paramName,
-        required: true,
-        message: 'POST参数名',
-        alias: 'POST参数名'
-      },
-      {
-        name: 'jsonPath',
-        type: 'input',
-        default: userConfig.jsonPath,
-        required: false,
-        message: '图片URL JSON路径(eg: data.url)',
-        alias: 'JSON路径'
-      },
       {
         name: 'customHeader',
         type: 'input',
