@@ -1,17 +1,13 @@
-// const logger = require('@varnxy/logger')
-// logger.setDirectory('/Users/zhang/Work/WorkSpaces/WebWorkSpace/picgo-plugin-web-uploader/logs')
-// let log = logger('plugin')
-
 module.exports = (ctx) => {
   const register = () => {
-    ctx.helper.uploader.register('web-uploader', {
+    ctx.helper.uploader.register('bian666-uploader', {
       handle,
       name: 'bian666',
       config: config
     })
   }
   const handle = async function (ctx) {
-    let userConfig = ctx.getConfig('picBed.web-uploader')
+    let userConfig = ctx.getConfig('picBed.bian666-uploader')
     if (!userConfig) {
       throw new Error('Can\'t find uploader config')
     }
@@ -76,7 +72,7 @@ module.exports = (ctx) => {
   }
 
   const config = ctx => {
-    let userConfig = ctx.getConfig('picBed.web-uploader')
+    let userConfig = ctx.getConfig('picBed.bian666-uploader')
     if (!userConfig) {
       userConfig = {}
     }
@@ -100,9 +96,7 @@ module.exports = (ctx) => {
     ]
   }
   return {
-    uploader: 'web-uploader',
-    // transformer: 'web-uploader',
-    // config: config,
+    uploader: 'bian666-uploader',
     register
 
   }

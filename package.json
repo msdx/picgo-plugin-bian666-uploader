@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-bian666-uploader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "bian666图床",
   "main": "src/index.js",
   "publishConfig": {
